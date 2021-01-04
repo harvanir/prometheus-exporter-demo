@@ -1,0 +1,28 @@
+version: "3.7"
+
+services:
+  mysqld-exporter:
+    container_name: mysqld-exporter
+    image: prom/mysqld-exporter
+    ports:
+      - 9104:9104
+    network_mode: host
+    ulimits:
+      nproc: 514933
+      nofile:
+        soft: 65535
+        hard: 65535
+    sysctls:
+      net.ipv4.tcp_tw_reuse: 1
+      net.ipv4.ip_local_port_range: 1025 65000
+    environment:
+      DATA_SOURCE_NAME: exporter:password@(localhost:13306)/
+    deploy:
+      resources:
+        limits:
+          memory: 20m
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "3"
