@@ -1,3 +1,0 @@
-# replace 192.168.32.1 to your ip address
-CREATE USER 'exporter'@'192.168.32.1' IDENTIFIED BY 'password' WITH MAX_USER_CONNECTIONS 3;
-GRANT PROCESS, REPLICATION CLIENT, SELECT ON *.* TO 'exporter'@'192.168.32.1';

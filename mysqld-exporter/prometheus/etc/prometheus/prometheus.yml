@@ -1,5 +1,5 @@
 scrape_configs:
-  - job_name: 'mysqld-exporter'
+  - job_name: 'mysqld-exporter-local'
     metrics_path: '/metrics'
     scrape_interval: 10s
     static_configs:

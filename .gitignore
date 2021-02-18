@@ -1,1 +1,2 @@
 .idea
+mysqld-exporter/mysql/datadir

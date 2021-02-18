@@ -1,36 +1,80 @@
 # Prometheus MySQL Server Exporter
 
-## Setup
-
-### SQL (sql/script.sql)
-
-- Modify the sql script according to your needs
-- Run the sql script
-
-### Run exporter
+## Run exporter
 
 Execute command:
 
 ```shell
-./run-mysqld-exporter
+./cmd-run
 ```
 
-### Testing
+## Register mysql user for exporter
+
+Run inside docker mysql:
+
+```shell
+docker exec -it mysql-exporter bash
+```
+
+Login mysql as root using with identifier <code>password</code>
+
+```shell
+mysql -u root -p
+```
+
+Execute sql below
+
+```shell
+CREATE USER 'exporter'@'%' IDENTIFIED BY 'password' WITH MAX_USER_CONNECTIONS 3;
+GRANT PROCESS, REPLICATION CLIENT, SELECT ON *.* TO 'exporter'@'%';
+```
+
+## Application
+
+### mysqld exporter
 
 Browse exporter web page: [metrics](http://localhost:9104/metrics)
 
-### Add prometheus job scrape configs (prometheus/prometheus.yml)
+### prometheus
 
-Copy all yml key value to your prometheus.yml file, start from key <code>- job_name</code>
+Browse grafana: [prometheus](http://localhost:9090/targets)
 
-### Grafana integration
+### grafana
 
-Add to your grafana dashboard by importing json: grafana/MySQL-xxx.json
+Browse grafana: [grafana](http://localhost:3000)
 
-### Stop exporter
+#### First login screen
+
+* password: admin
+
+![](grafana/doc/1-grafana.png)
+
+#### Configure prometheus datasource
+
+prometheus datasource:
+
+![](grafana/doc/2-grafana.png)
+
+#### Import mysql dashboard json from file
+
+json file: <code>grafana/MySQL-1609789380031.json</code>
+
+![](grafana/doc/3-grafana.png)
+
+#### Sample grafana dashboard
+
+![](grafana/doc/4-grafana.png)
+
+## Stop exporter
 
 Execute command:
 
 ```shell
-./down-mysqld-exporter
+./cmd-stop
+```
+
+## Clean up exporter
+
+```shell
+./cmd-clean
 ```
